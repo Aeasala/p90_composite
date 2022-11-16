@@ -3,7 +3,6 @@
 	"$basetexture" "models/thedoctor/mat_tsar/metal_black"
 	"$surfaceprop" "metal"
 	"$model" 1
-	"$phong" 1
 	"$ssbump" 1
 	"$bumpmap" "thedoctor/mat_littleboy/main_skin_NRM"
 	"$normalmapalphaenvmapmask" 1
