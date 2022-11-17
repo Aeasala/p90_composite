@@ -1,0 +1,12 @@
+{
+	"title"		:	"Tsar Launcher",
+	"type"		:	"weapon",
+	"tags"		:	[ "fun" ],
+	"ignore"	:
+	[
+		".git",
+		"*.psd",
+		"*.vcproj",
+		"*.svn*"
+	]
+}
