@@ -1,1 +1,1 @@
-.\workshop\gmpublish.exe update -addon ".\output\tsar_launcher.gma" -id "2889552312" -changes "General trimming, made calls to modified-shared content safer so there's no panics about conflicting content" 
+.\workshop\gmpublish.exe update -addon ".\output\tsar_launcher.gma" -id "2889552312" -changes "Should now work with GB5 installed (or not installed)" 
