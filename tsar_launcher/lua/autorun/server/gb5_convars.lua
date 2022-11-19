@@ -8,6 +8,10 @@ if GetConVar("gb5_nuke_light") == nil then
 	CreateConVar("gb5_nuke_light", "1", { FCVAR_REPLICATED, FCVAR_ARCHIVE, FCVAR_NOTIFY } )
 end
 
+if GetConVar("tsarlauncher_Debug") == nil then
+	CreateConVar("tsarlauncher_Debug", "0", { FCVAR_REPLICATED, FCVAR_ARCHIVE, FCVAR_NOTIFY } )
+end
+
 if GetConVar("gb5_zombie_strength") == nil then
 	CreateConVar("gb5_zombie_strength", "1", { FCVAR_REPLICATED, FCVAR_ARCHIVE, FCVAR_NOTIFY } )
 end
