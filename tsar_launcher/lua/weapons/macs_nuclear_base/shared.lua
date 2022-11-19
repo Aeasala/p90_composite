@@ -284,7 +284,7 @@ function SWEP:ShootNuke()
 			ang:Add(eyes)
 		else
 			
-			tsar = ents.Create("gb5_nuclear_tsarbomba")
+			tsar = ents.Create("tl_gb5_nuclear_tsarbomba")
 			tsar:SetPos(self:ProjectileShootPos())
 			offsetPos_min, offsetPos_max = tsar:GetModelBounds()
 

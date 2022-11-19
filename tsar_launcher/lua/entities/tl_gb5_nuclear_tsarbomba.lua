@@ -2,8 +2,8 @@ AddCSLuaFile()
 
 DEFINE_BASECLASS( "gb5_base_advanced_nuke" )
 
-ENT.Spawnable		            	 =  true     
-ENT.AdminSpawnable		             =  true
+ENT.Spawnable		            	 =  false     
+ENT.AdminSpawnable		             =  false
 
 ENT.PrintName		                 =  "Tsar Bomba"
 ENT.Author			                 =  "Rogue"
