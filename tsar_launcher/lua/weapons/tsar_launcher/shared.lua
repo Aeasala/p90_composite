@@ -1,13 +1,13 @@
 -- Variables that are used on both client and server
 SWEP.Gun = ("tsar_launcher") -- must be the name of your swep but NO CAPITALS!
-SWEP.Category				= "M9K Submachine Guns"
+SWEP.Category				= "Tsar Launcher"
 SWEP.Author				= ""
 SWEP.Contact				= ""
 SWEP.Purpose				= ""
 SWEP.Instructions				= ""
 SWEP.MuzzleAttachment			= "1" 	-- Should be "1" for CSS models or "muzzle" for hl2 models
 SWEP.ShellEjectAttachment			= "2" 	-- Should be "2" for CSS models or "1" for hl2 models
-SWEP.PrintName				= "Nuclear FN P90"		-- Weapon name (Shown on HUD)	
+SWEP.PrintName				= "Tsar Launcher"		-- Weapon name (Shown on HUD)	
 SWEP.Slot				= 2				-- Slot in the weapon selection menu
 SWEP.SlotPos				= 51			-- Position in the slot
 SWEP.DrawAmmo				= true		-- Should draw the default HL2 ammo counter

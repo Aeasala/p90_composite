@@ -52,18 +52,6 @@ function source_debug( ply, command)
 	ply:ChatPrint("Engine Tickrate: \n"..tostring(1/engine.TickInterval()))
 end
 
-
-function gb5_initial_spawn(ply, command, arguements, ClassName)
-	ply:ChatPrint("Welcome, "..ply:Nick().." ! This awesome server is running Garry's Bombs 5!")
-end
-hook.Add( "PlayerInitialSpawn", "playerInitialSpawn", gb5_initial_spawn )
-
-
-function gb5version( ply, command, arguments )
-    ply:ChatPrint( "Garry's Bombs: 5 - 18/05/2015" )
-end
-concommand.Add( "gb5_version", gb5version )
-
 function gb5_tiberium_cleanup( ply, command, arguments )
 	local crystals = 0
     if ply:IsAdmin() or ply:IsSuperAdmin() then
