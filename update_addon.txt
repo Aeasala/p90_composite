@@ -1,1 +1,1 @@
-gmpublish.exe update -addon ".\tsar_launcher.gma" -id "2889552312" -changes "Fixed Something" 
+.\workshop\gmpublish.exe update -addon ".\tsar_launcher.gma" -id "2889552312" -changes "Fixed call to eyes (main error)" 
