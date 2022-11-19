@@ -253,11 +253,14 @@ function SWEP:ShootNuke()
 			print("Clear of expired salvos")
 		end
         
+		eyes = self.Owner:EyeAngles()
+		
 		dbg = false
 		ignoreCollisions = true
 		
 		basePos = self:ProjectileShootPos()
 		p, y, r = eyes:Unpack()
+		
 		p_rad = math.rad(-p)
 		y_rad = math.rad(y)
 		r_rad = math.rad(r)
@@ -269,10 +272,10 @@ function SWEP:ShootNuke()
 
 		r_rad_s = -math.sin(r_rad)
 		
-		norm_vel_vec = Vector(y_rad_s_x,y_rad_s_y,p_rad_s)
+		norm_vel_vec = Vector(y_rad_s_x, y_rad_s_y, p_rad_s)
 		norm_vel_vec:Mul(5000)
+		
 		if dbg then
-			eyes = self.Owner:EyeAngles()
 			tsar = ents.Create("prop_physics")
 			tsar:SetModel("models/props_c17/oildrum001.mdl")
 			tsar:SetPos(self:ProjectileShootPos())
@@ -280,10 +283,8 @@ function SWEP:ShootNuke()
 			ang = Angle(90,0,0)
 			ang:Add(eyes)
 		else
-			eyes = self.Owner:EyeAngles()
-			tsar = ents.Create("gb5_nuclear_tsarbomba")
 			
-
+			tsar = ents.Create("gb5_nuclear_tsarbomba")
 			tsar:SetPos(self:ProjectileShootPos())
 			offsetPos_min, offsetPos_max = tsar:GetModelBounds()
 
