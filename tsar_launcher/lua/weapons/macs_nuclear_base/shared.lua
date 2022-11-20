@@ -228,20 +228,24 @@ function SWEP:ShootNuke()
         if not self.Owner.Bombs then
             self:InitOwner()
         end
+		
 		local numRemaining = #self.Owner.Bombs
+		
+		local max_salvos = cvars.Number("tsarlauncher_max_salvos", 64)
+		
 		print("\n---Firing Nuke---\n")
 		for bombct=#self.Owner.Bombs,1,-1 do
 			local bombidx = bombct
             local bomb = self.Owner.Bombs[bombidx]
 
-			if bombct >= 255 then
+			if bombct > max_salvos then
 				print("High count, removing bomb from list")
 				local bomb = self.Owner.Bombs[1]
 				SafeRemoveEntity(bomb)
 				table.remove(self.Owner.Bombs, 1)
 			end
             if not IsValid(bomb) then
-				print("removing expired salvo, " .. tostring(b))
+				print("removing expired salvo [" .. tostring(bombidx) .. "]")
 				table.remove(self.Owner.Bombs, bombidx)
 			end
 			
@@ -253,46 +257,25 @@ function SWEP:ShootNuke()
 			print("Clear of expired salvos")
 		end
         
-		eyes = self.Owner:EyeAngles()
-		
-		dbg = false
+		local eyes = self.Owner:EyeAngles()
+		local dbg = cvars.Bool("tsarlauncher_debug")
 		ignoreCollisions = true
 		
 		basePos = self:ProjectileShootPos()
-		p, y, r = eyes:Unpack()
 		
-		p_rad = math.rad(-p)
-		y_rad = math.rad(y)
-		r_rad = math.rad(r)
-		
-		p_rad_s = math.sin(p_rad)
-		
-		y_rad_s_x = math.cos(y_rad)
-		y_rad_s_y = math.sin(y_rad)
-
-		r_rad_s = -math.sin(r_rad)
-		
-		norm_vel_vec = Vector(y_rad_s_x, y_rad_s_y, p_rad_s)
-		norm_vel_vec:Mul(5000)
-		
+		local p, y, r = eyes:Unpack()
+		local tsar
+		print()
 		if dbg then
 			tsar = ents.Create("prop_physics")
 			tsar:SetModel("models/props_c17/oildrum001.mdl")
-			tsar:SetPos(self:ProjectileShootPos())
-			offsetPos_min, offsetPos_max = tsar:GetModelBounds()
 			ang = Angle(90,0,0)
 			ang:Add(eyes)
 		else
 			
 			tsar = ents.Create("tl_gb5_nuclear_tsarbomba")
-			tsar:SetPos(self:ProjectileShootPos())
-			offsetPos_min, offsetPos_max = tsar:GetModelBounds()
 
 			swap_p_r = Angle(r, y, p)
-			
-
-			print(norm_vel_vec)
-			testvec = Vector(50000,0,0)
 			
 			offset = Angle(0,90,0)
 			ang = Angle(0,0,0)
@@ -300,7 +283,7 @@ function SWEP:ShootNuke()
 			ang:Add(swap_p_r)
 			ang:Add(offset)
 		end
-		offsetVector = Vector(0, 0, 0)
+		local offsetVector = Vector(0, 0, 0)
 		basePos:Add(offsetVector)
 		tsar:SetPos(basePos)
 		
@@ -309,42 +292,26 @@ function SWEP:ShootNuke()
 		tsar:SetAngles(ang)
 		
         tsar:Spawn()
+		tsar_phys = tsar:GetPhysicsObject()
+		tsar_phys:EnableGravity(cvars.Bool("tsarlauncher_gravity"), false)
+		tsar_phys:EnableDrag(false)
+		
 		tsar.Armed = true
 		tsar.Life = 1
-		tsar_phys = tsar:GetPhysicsObject()
-		//tsar_phys:SetVelocityInstantaneous(Vector(1000,0,0))
-				p, y, r = eyes:Unpack()
-		p_rad = math.rad(-p)
-		y_rad = math.rad(y)
-		r_rad = math.rad(r)
-		
-		p_rad_s = math.sin(p_rad)
-		
-		y_rad_s_x = math.cos(y_rad)
-		y_rad_s_y = math.sin(y_rad)
 
-		r_rad_s = -math.sin(r_rad)
 		
-		norm_vel_vec = Vector(y_rad_s_x,y_rad_s_y,p_rad_s)
-		norm_vel_vec:Mul(50000)
+		norm_vel_vec = self.Owner:GetAimVector()
+		norm_vel_vec:Mul(cvars.Number("tsarlauncher_speed_mult"), 50000)
 		tsar_phys:SetVelocity(norm_vel_vec)
         undo.Create("Tsar Salvo")
 		 undo.AddEntity(tsar)
 		 undo.SetPlayer(self.Owner)
 		undo.Finish()
 		
+
 		
 		SafeRemoveEntityDelayed(tsar,10)
 		if not IsValid(tsar) then return end
-        
-        local vel = self.Owner:GetAimVector() * self.Force + Vector(0, 0, 1100)
-        
-		local phys = tsar:GetPhysicsObject()
-		//tsar:SetAngles(self.Owner:GetAimVector())
-		if !IsValid(phys) then
-			//phys:AddAngleVelocity(Vector(math.random(-2000,2000),math.random(-2000,2000),math.random(-2000,2000)))
-			//phys:ApplyForceCenter(vel)
-		end
 		
         table.insert(self.Owner.Bombs, tsar)
 		
@@ -357,20 +324,21 @@ function SWEP:ShootNuke()
 				local bomb = self.Owner.Bombs[likely_added_bomb_idx]
 				local buddy = self.Owner.Bombs[bombct-1]
 				constraint.NoCollide(bomb,buddy,0,0)
+
 				if not IsValid(bomb) then
-					print("removing expired salvo, " .. tostring(b))
+					print("removing expired salvo [" .. tostring(bombidx) .. "]")
 					table.remove(self.Owner.Bombs, bombidx)
+					
 				end
 				
 				numRemaining = #self.Owner.Bombs
 			end
 		end
-		print(tsar:GetAbsVelocity())
 
 		print("\n-----------------Nuke Fire End-----------------")
         end
         
-    //self:ShootEffects()
+    self:ShootEffects()
     
 end
 function SWEP:PrimaryAttack()
